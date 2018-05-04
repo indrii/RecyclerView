@@ -2,10 +2,12 @@ package com.dicoding.recyclerview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+                setActionBarTitle("Mode List");
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_main);
                 rvCategory = (RecyclerView)findViewById(R.id.rv_category);
@@ -56,6 +59,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return super.onOptionsItemSelected(item);
         }
+        private void setActionBarTitle(String title){
+                getSupportActionBar().setTitle(title);
+        }
+        private void showRecyclerCardView(){
+                rvCategory.setLayoutManager(new LinearLayoutManager(this));
+
+                CardViewPresidentAdapter cardViewPresidentAdapter = new CardViewPresidentAdapter(this);
+                cardViewPresidentAdapter.setListPresident(list);
+                rvCategory.setAdapter(cardViewPresidentAdapter);
+        }
+        private void showRecyclerGrid(){
+                rvCategory.setLayoutManager(new GridLayoutManager(this, 2));
+                GridPresidentAdapter gridPresidentAdapter = new GridPresidentAdapter(this);
+                gridPresidentAdapter.setListPresident(list);
+                rvCategory.setAdapter(gridPresidentAdapter);
+        }
+    private void showSelectedPresident(President president){
+        Toast.makeText(this, "Kamu memilih "+president.getName(), Toast.LENGTH_SHORT).show();
+    }
 }
 
 
